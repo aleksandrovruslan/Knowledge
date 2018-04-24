@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout :: head(~{this :: title},_,_)">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Home page</title>
+</head>
+<body>
+<div th:replace="layout :: header(_,_)">Header</div>
+<div th:replace="layout :: general(_,_,_)">General</div>
+<footer th:replace="layout :: footer">Footer</footer>
+</body>
+</html>
