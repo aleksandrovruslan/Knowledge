@@ -1,4 +1,4 @@
-package com.aleksandrov.Knowledge.services;
+package com.aleksandrov.Knowledge.services.QuizType;
 
 import com.aleksandrov.Knowledge.models.QuizType;
 

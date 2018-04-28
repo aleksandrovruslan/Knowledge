@@ -1,4 +1,4 @@
-package com.aleksandrov.Knowledge.services;
+package com.aleksandrov.Knowledge.services.CollectionType;
 
 import com.aleksandrov.Knowledge.models.CollectionType;
 

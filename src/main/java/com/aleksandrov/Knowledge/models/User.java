@@ -1,7 +1,7 @@
 package com.aleksandrov.Knowledge.models;
+//TODO make DTO for all entities
 
 import javax.persistence.*;
-import javax.validation.constraints.Email;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;

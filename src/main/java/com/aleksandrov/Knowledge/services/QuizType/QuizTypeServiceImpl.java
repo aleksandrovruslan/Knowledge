@@ -1,7 +1,8 @@
-package com.aleksandrov.Knowledge.services;
+package com.aleksandrov.Knowledge.services.QuizType;
 
 import com.aleksandrov.Knowledge.models.QuizType;
 import com.aleksandrov.Knowledge.repositories.QuizTypeRepository;
+import com.aleksandrov.Knowledge.services.QuizType.QuizTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

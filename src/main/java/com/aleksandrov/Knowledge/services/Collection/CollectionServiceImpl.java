@@ -1,7 +1,8 @@
-package com.aleksandrov.Knowledge.services;
+package com.aleksandrov.Knowledge.services.Collection;
 
 import com.aleksandrov.Knowledge.models.Collection;
 import com.aleksandrov.Knowledge.repositories.CollectionRepository;
+import com.aleksandrov.Knowledge.services.Collection.CollectionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

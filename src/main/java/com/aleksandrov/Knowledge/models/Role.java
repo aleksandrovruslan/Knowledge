@@ -9,7 +9,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "roles")
-@JsonIgnoreProperties({"users"})
+@JsonIgnoreProperties("users")
 public class Role implements Serializable {
     private static final long serialVersionUID = 3628553449870100467L;
 

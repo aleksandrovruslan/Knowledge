@@ -1,10 +1,13 @@
-package com.aleksandrov.Knowledge.services;
+package com.aleksandrov.Knowledge.services.Role;
 
 import com.aleksandrov.Knowledge.models.Role;
+
+import java.util.List;
 
 public interface RoleService {
     Role getRole(int id);
     Role saveRole(Role role);
     void deleteRole(int id);
-    Iterable<Role> getRoles();
+    Role editRoles(Role role);
+    List<Role> getRoles();
 }

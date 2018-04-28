@@ -1,10 +1,13 @@
-package com.aleksandrov.Knowledge.services;
+package com.aleksandrov.Knowledge.services.Word;
 
 import com.aleksandrov.Knowledge.models.Word;
+
+import java.util.List;
 
 public interface WordService {
     Word getWord(long id);
     Word saveWord(Word word);
     void deleteWord(long id);
-    Iterable<Word> getWords();
+    Word editWord(Word word);
+    List<Word> getWords();
 }

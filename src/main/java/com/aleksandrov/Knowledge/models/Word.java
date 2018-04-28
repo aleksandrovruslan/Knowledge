@@ -1,5 +1,7 @@
 package com.aleksandrov.Knowledge.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
@@ -7,6 +9,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "words")
+@JsonIgnoreProperties({"quizzes", "quizTranslations"})
 public class Word implements Serializable {
     private static final long serialVersionUID = -7447129338242209985L;
 

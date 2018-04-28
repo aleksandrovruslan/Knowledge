@@ -1,11 +1,10 @@
 package com.aleksandrov.Knowledge.controllers;
 
 import com.aleksandrov.Knowledge.models.Role;
-import com.aleksandrov.Knowledge.services.RoleService;
+import com.aleksandrov.Knowledge.services.Role.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -36,8 +35,6 @@ public class RoleController {
 
     @GetMapping("list")
     public List<Role> list() {
-        List<Role> roles = new ArrayList<>();
-        roleService.getRoles().forEach((r) -> roles.add(r));
-        return roles;
+        return roleService.getRoles();
     }
 }
