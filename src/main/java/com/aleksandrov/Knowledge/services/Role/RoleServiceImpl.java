@@ -21,7 +21,6 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public Role saveRole(Role role) {
-        findRole(role.getId());
         return roleRepository.save(role);
     }
 
@@ -40,7 +39,7 @@ public class RoleServiceImpl implements RoleService {
     @Override
     public List<Role> getRoles() {
         List<Role> roles = new LinkedList<>();
-        roleRepository.findAll().forEach((r) -> roles.add(r));
+        roleRepository.findAll().forEach(role -> roles.add(role));
         return roles;
     }
 

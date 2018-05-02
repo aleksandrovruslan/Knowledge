@@ -1,6 +1,6 @@
 package com.aleksandrov.Knowledge.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -9,7 +9,6 @@ import java.util.Set;
 
 @Entity
 @Table(name = "quizzes")
-@JsonIgnoreProperties({"answers", "collections"})
 public class Quiz implements Serializable {
     private static final long serialVersionUID = 7644077023940551370L;
 
@@ -17,9 +16,8 @@ public class Quiz implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(optional = false
-            , cascade = {CascadeType.ALL}
-            , fetch = FetchType.LAZY)
+    @ManyToOne(optional = false, cascade = {CascadeType.REFRESH
+            , CascadeType.DETACH}, fetch = FetchType.LAZY)
     @JoinColumn(name = "quiz_type_id")
     private QuizType quizType;
 
@@ -36,6 +34,7 @@ public class Quiz implements Serializable {
             inverseJoinColumns = @JoinColumn(name = "answer_id"))
     private Set<Word> answers = new HashSet<>();
 
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @ManyToMany(mappedBy = "quizzes")
     private Set<Collection> collections = new HashSet<>();
 

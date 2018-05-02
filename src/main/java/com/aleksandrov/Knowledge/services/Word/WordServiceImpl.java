@@ -39,11 +39,12 @@ public class WordServiceImpl implements WordService {
     @Override
     public List<Word> getWords() {
         List<Word> words = new LinkedList<>();
-        wordRepository.findAll().forEach((w) -> words.add(w));
+        wordRepository.findAll().forEach(word -> words.add(word));
         return words;
     }
 
     private Word findWord(long id) {
-        return wordRepository.findById(id).orElseThrow(() -> new WordNotFoundException("Word id " + id + " not found."));
+        return wordRepository.findById(id).orElseThrow(() ->
+                new WordNotFoundException("Word id " + id + " not found."));
     }
 }

@@ -1,6 +1,6 @@
 package com.aleksandrov.Knowledge.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -9,7 +9,6 @@ import java.util.Set;
 
 @Entity
 @Table(name = "roles")
-@JsonIgnoreProperties("users")
 public class Role implements Serializable {
     private static final long serialVersionUID = 3628553449870100467L;
 
@@ -17,8 +16,10 @@ public class Role implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String name;
 
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @ManyToMany(mappedBy = "roles")
     private Set<User> users = new HashSet<>();
 

@@ -1,6 +1,8 @@
 package com.aleksandrov.Knowledge.exceptions.User;
 
-public class UserNotFoundException extends RuntimeException {
+import com.aleksandrov.Knowledge.exceptions.NotFoundException;
+
+public class UserNotFoundException extends NotFoundException {
     public UserNotFoundException() {
     }
 

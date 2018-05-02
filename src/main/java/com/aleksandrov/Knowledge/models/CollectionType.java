@@ -1,5 +1,8 @@
 package com.aleksandrov.Knowledge.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
@@ -7,6 +10,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "collection_types")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class CollectionType implements Serializable {
     private static final long serialVersionUID = 8744069651265463940L;
 
@@ -16,6 +20,7 @@ public class CollectionType implements Serializable {
 
     private String name;
 
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @OneToMany(mappedBy = "type")
     private Set<Collection> collections = new HashSet<>();
 

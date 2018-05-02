@@ -1,6 +1,7 @@
 package com.aleksandrov.Knowledge.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -9,7 +10,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "words")
-@JsonIgnoreProperties({"quizzes", "quizTranslations"})
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Word implements Serializable {
     private static final long serialVersionUID = -7447129338242209985L;
 
@@ -19,9 +20,11 @@ public class Word implements Serializable {
 
     private String name;
 
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @OneToMany(mappedBy = "question")
     private Set<Quiz> quizzes = new HashSet<>();
 
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @ManyToMany(mappedBy = "answers")
     private Set<Quiz> quizTranslations = new HashSet<>();
 

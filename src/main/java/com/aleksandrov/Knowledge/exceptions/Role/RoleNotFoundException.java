@@ -1,6 +1,8 @@
 package com.aleksandrov.Knowledge.exceptions.Role;
 
-public class RoleNotFoundException extends RuntimeException {
+import com.aleksandrov.Knowledge.exceptions.NotFoundException;
+
+public class RoleNotFoundException extends NotFoundException {
     public RoleNotFoundException() {
     }
 

@@ -6,7 +6,6 @@ import com.aleksandrov.Knowledge.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -34,16 +33,13 @@ public class UserServiceImpl implements UserService {
     @Override
     public User editUser(User user) {
         findUser(user.getId());
-        return saveUser(user);
+        return userRepository.save(user);
     }
 
     @Override
     public List<User> listUsers() {
         List<User> users = new LinkedList<>();
-        for (User user:userRepository.findAll()) {
-            user.setPassword(null);
-            users.add(user);
-        }
+        userRepository.findAll().forEach(user -> users.add(user));
         return users;
     }
 

@@ -1,10 +1,13 @@
 package com.aleksandrov.Knowledge.services.Quiz;
 
+import com.aleksandrov.Knowledge.exceptions.Quiz.QuizNotFoudException;
 import com.aleksandrov.Knowledge.models.Quiz;
 import com.aleksandrov.Knowledge.repositories.QuizRepository;
-import com.aleksandrov.Knowledge.services.Quiz.QuizService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class QuizServiceImpl implements QuizService {
@@ -13,7 +16,7 @@ public class QuizServiceImpl implements QuizService {
 
     @Override
     public Quiz getQuiz(long id) {
-        return quizRepository.getById(id);
+        return findQuiz(id);
     }
 
     @Override
@@ -23,11 +26,25 @@ public class QuizServiceImpl implements QuizService {
 
     @Override
     public void deleteQuiz(long id) {
+        findQuiz(id);
         quizRepository.deleteById(id);
     }
 
     @Override
-    public Iterable<Quiz> getQuizzes() {
-        return quizRepository.findAll();
+    public Quiz edit(Quiz quiz) {
+        findQuiz(quiz.getId());
+        return quizRepository.save(quiz);
+    }
+
+    @Override
+    public List<Quiz> getQuizzes() {
+        List<Quiz> quizzes = new ArrayList<>();
+        quizRepository.findAll().forEach(quiz -> quizzes.add(quiz));
+        return quizzes;
+    }
+
+    private Quiz findQuiz(long id) {
+        return quizRepository.findById(id).orElseThrow(() ->
+                new QuizNotFoudException("Quiz id " + id + " not found."));
     }
 }

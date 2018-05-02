@@ -1,6 +1,8 @@
 package com.aleksandrov.Knowledge.exceptions.Word;
 
-public class WordNotFoundException extends RuntimeException {
+import com.aleksandrov.Knowledge.exceptions.NotFoundException;
+
+public class WordNotFoundException extends NotFoundException {
     public WordNotFoundException() {
     }
 

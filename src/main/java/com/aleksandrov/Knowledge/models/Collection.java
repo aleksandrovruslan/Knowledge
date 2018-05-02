@@ -1,5 +1,7 @@
 package com.aleksandrov.Knowledge.models;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
@@ -17,14 +19,16 @@ public class Collection implements Serializable {
     private String name;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false
-            , cascade = CascadeType.ALL)
+            , cascade = CascadeType.REFRESH)
     @JoinColumn(name = "type_id")
     private CollectionType type;
 
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @ManyToMany(mappedBy = "collections", fetch = FetchType.LAZY)
     private Set<User> users = new HashSet<>();
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.REFRESH, CascadeType.REMOVE}
+            , fetch = FetchType.LAZY)
     @JoinTable(name = "collection_quizzes"
             , joinColumns = @JoinColumn(name = "collection_id")
             , inverseJoinColumns = @JoinColumn(name = "quiz_id"))
@@ -33,7 +37,8 @@ public class Collection implements Serializable {
     public Collection() {
     }
 
-    public Collection(String name, CollectionType type, Set<User> users, Set<Quiz> quizzes) {
+    public Collection(String name, CollectionType type
+            , Set<User> users, Set<Quiz> quizzes) {
         this.name = name;
         this.type = type;
         this.users = users;
