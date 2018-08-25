@@ -31,9 +31,10 @@ public class WordServiceImpl implements WordService {
     }
 
     @Override
-    public Word editWord(Word word) {
-        findWord(word.getId());
-        return saveWord(word);
+    public Word editWord(Word word, long id) {
+        Word baseWord = findWord(id);
+        baseWord.setName(word.getName());
+        return saveWord(baseWord);
     }
 
     @Override

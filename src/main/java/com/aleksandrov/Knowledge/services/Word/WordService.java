@@ -8,6 +8,6 @@ public interface WordService {
     Word getWord(long id);
     Word saveWord(Word word);
     void deleteWord(long id);
-    Word editWord(Word word);
+    Word editWord(Word word, long id);
     List<Word> getWords();
 }

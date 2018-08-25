@@ -31,9 +31,11 @@ public class QuizServiceImpl implements QuizService {
     }
 
     @Override
-    public Quiz edit(Quiz quiz) {
-        findQuiz(quiz.getId());
-        return quizRepository.save(quiz);
+    public Quiz edit(Quiz quiz, long id) {
+        Quiz baseQuiz = findQuiz(quiz.getId());
+        baseQuiz.setQuestion(quiz.getQuestion());
+        baseQuiz.setAnswers(quiz.getAnswers());
+        return quizRepository.save(baseQuiz);
     }
 
     @Override

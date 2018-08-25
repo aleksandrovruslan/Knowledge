@@ -1,6 +1,5 @@
 package com.aleksandrov.Knowledge.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
@@ -10,7 +9,6 @@ import java.util.Set;
 
 @Entity
 @Table(name = "words")
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Word implements Serializable {
     private static final long serialVersionUID = -7447129338242209985L;
 

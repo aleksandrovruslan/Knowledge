@@ -1,9 +1,8 @@
 package com.aleksandrov.Knowledge.services.Collection;
 
-import com.aleksandrov.Knowledge.exceptions.CollectionType.CollectionTypeNotFoundException;
+import com.aleksandrov.Knowledge.exceptions.Collection.CollectionNotFoundException;
 import com.aleksandrov.Knowledge.models.Collection;
 import com.aleksandrov.Knowledge.repositories.CollectionRepository;
-import com.aleksandrov.Knowledge.services.Collection.CollectionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -32,8 +31,10 @@ public class CollectionServiceImpl implements CollectionService {
     }
 
     @Override
-    public Collection edit(Collection collection) {
-        findCollection(collection.getId());
+    public Collection edit(Collection collection, long id) {
+        Collection baseCollection = findCollection(collection.getId());
+        baseCollection.setName(collection.getName());
+        baseCollection.setQuizzes(collection.getQuizzes());
         return collectionRepository.save(collection);
     }
 
@@ -46,6 +47,6 @@ public class CollectionServiceImpl implements CollectionService {
 
     private Collection findCollection(long id) {
         return collectionRepository.findById(id).orElseThrow(() ->
-                new CollectionTypeNotFoundException("Collection id " + id + " not found."));
+                new CollectionNotFoundException("Collection id " + id + " not found."));
     }
 }

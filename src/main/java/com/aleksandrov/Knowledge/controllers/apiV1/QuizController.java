@@ -1,4 +1,4 @@
-package com.aleksandrov.Knowledge.controllers;
+package com.aleksandrov.Knowledge.controllers.apiV1;
 
 import com.aleksandrov.Knowledge.models.Quiz;
 import com.aleksandrov.Knowledge.services.Quiz.QuizService;
@@ -8,32 +8,32 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/quiz/")
+@RequestMapping("/quiz")
 public class QuizController {
     @Autowired
     private QuizService quizService;
 
-    @GetMapping("get/{id}")
+    @GetMapping("/{id}")
     public Quiz get(@PathVariable long id) {
         return quizService.getQuiz(id);
     }
 
-    @PostMapping("add/")
+    @PostMapping("/")
     public Quiz add(@RequestBody Quiz quiz) {
         return quizService.saveQuiz(quiz);
     }
 
-    @DeleteMapping("delete/{id}")
+    @DeleteMapping("/{id}")
     public void delete(@PathVariable long id) {
         quizService.deleteQuiz(id);
     }
 
-    @PutMapping("edit/")
-    public Quiz edit(@RequestBody Quiz quiz) {
-        return quizService.edit(quiz);
+    @PutMapping("/{id}")
+    public Quiz edit(@RequestBody Quiz quiz, @PathVariable Long id) {
+        return quizService.edit(quiz, id);
     }
 
-    @GetMapping("list")
+    @GetMapping("/list")
     public List<Quiz> list() {
         return quizService.getQuizzes();
     }

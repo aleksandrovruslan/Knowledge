@@ -8,6 +8,6 @@ public interface CollectionService {
     Collection getCollection(long id);
     Collection saveCollection(Collection collection);
     void deleteCollection(long id);
-    Collection edit(Collection collection);
+    Collection edit(Collection collection, long id);
     List<Collection> getCollections();
 }

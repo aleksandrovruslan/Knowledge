@@ -16,11 +16,6 @@ public class Quiz implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(optional = false, cascade = {CascadeType.REFRESH
-            , CascadeType.DETACH}, fetch = FetchType.LAZY)
-    @JoinColumn(name = "quiz_type_id")
-    private QuizType quizType;
-
     @ManyToOne(optional = false
             , cascade = {CascadeType.ALL}
             , fetch = FetchType.LAZY)
@@ -41,9 +36,12 @@ public class Quiz implements Serializable {
     public Quiz() {
     }
 
-    public Quiz(QuizType quizType, Word question
-            , Set<Word> answers, Set<Collection> collections) {
-        this.quizType = quizType;
+    public Quiz(Word question, Set<Word> answers) {
+        this.question = question;
+        this.answers = answers;
+    }
+
+    public Quiz(Word question, Set<Word> answers, Set<Collection> collections) {
         this.question = question;
         this.answers = answers;
         this.collections = collections;
@@ -55,14 +53,6 @@ public class Quiz implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public QuizType getQuizType() {
-        return quizType;
-    }
-
-    public void setQuizType(QuizType quizType) {
-        this.quizType = quizType;
     }
 
     public Word getQuestion() {
@@ -93,7 +83,6 @@ public class Quiz implements Serializable {
     public String toString() {
         return "Quiz{" +
                 "id=" + id +
-                ", quizType=" + quizType +
                 ", question=" + question +
                 ", answers=" + answers +
                 '}';

@@ -7,7 +7,6 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="/css/common.css" th:src="@{/css/common.css}">
 
     <script type="text/javascript" src="/js/common.js" th:src="@{/js/common.js}"></script>
@@ -16,120 +15,34 @@
 
     <th:block th:replace="${scripts}"/>
 </head>
-<body>
+<body class="bg-light">
 
 <!--Header-->
-<div th:fragment="header(links, profile)" class="container" id="topic">
-    <div class="row">
-        <div class="col-3" id="brand">
-            <div class="nav navbar-light" id="pic">
-                <a class="navbar-brand" href="/">
-                    <img src="/images/books.jpg" th:src="@{/images/books.jpg}" width="30" height="30" class="d-inline-block align-top" alt="">
-                    Learn English
-                </a>
-            </div>
-        </div>
-        <div class="col-6 text-center" id="headermenu">
-            <div th:replace="${links}">header menu</div>
-        </div>
-        <div class="col-3 text-right" id="profile">
-            <th:block  th:replace="${profile}">
-                <div th:switch="${#ctx.session.user}">
-                    <p th:case="null">
-                        <a th:href="@{/signin}">sign in </a>OR<a th:href="@{/signup}"> sign up</a>
-                    </p>
-                    <p th:case="*">
-                        <a th:href="@{/profile}" th:text="${#ctx.session.user.getName()}">profile</a>
-                        <a th:href="@{/logout}" th:text="Logout">Logout</a>
-                    </p>
-                </div>
-            </th:block>
-        </div>
+<div th:fragment="header(links)" class="row" id="topic">
+    <div class="navbar navbar-expand-md navbar-dark fixed-top bg-dark" id="links">
+        <th:block  th:replace="${links}">
+            <a class="navbar-brand" href="/">Learn</a>
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/collections">Collections</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/words">Words</a>
+                </li>
+            </ul>
+        </th:block>
     </div>
 </div>
 
-<div th:fragment="general(left, content, right)" class="container">
-    <div class="row">
-
-        <!--Left menu-->
-        <div class="col-3" id="menu-l">
-            <div th:replace="${left}">
-                <ul class="nav flex-column">
-                    <li class="nav-item">
-                        <a class="nav-link" th:href="@{/home}">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" th:href="@{/addword}">Add word</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" th:href="@{/collections}">My collections</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" th:href="@{/addcollection}">Add collection</a>
-                    </li>
-                </ul>
-            </div>
-            <!--//TODO to make one condition, checking an empty session produces an error-->
-            <th:block th:if="${#ctx.session.user != null && 'Administrator' == #ctx.session.user.getRole().getName()}">
-                <div th:replace="menu :: adminpanel">
-                    Admin panel
-                </div>
-            </th:block>
-        </div>
-
-        <!--Content-->
-        <div class="col-6" id="text">
-            <div class="row">
-                <div class="col-2"></div>
-                <div class="col-7">
-                    <div>
-                        <th:block th:if="${errors != null}">
-                            <div class="alert alert-danger" id="errors">
-                                <th:block th:each="error : ${errors}">
-                                    <p th:text="${error}">Error</p>
-                                </th:block>
-                            </div>
-                        </th:block>
-                        <th:block th:if="${messages != null}">
-                            <div class="alert alert-success" id="messages">
-                                <th:block th:each="message : ${messages}">
-                                    <p th:text="${message}">Message</p>
-                                </th:block>
-                            </div>
-                        </th:block>
-                    </div>
-                </div>
-                <div class="col-3"></div>
-            </div>
-            <div th:replace="${content}">
-                <h5 class="text-center">This site for learn English words</h5>
-                <p>
-                    With it you can learn a lot of new words.
-                    You will be able to create your word collectionsService for study and share them by other users and friends.
-                </p>
-            </div>
-        </div>
-
-        <!--Right menu-->
-        <div class="col-3" id="menu-r">
-            <div th:replace="${right}">
-                <ul class="nav flex-column">
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Friends list</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">News</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
+<div th:fragment="general(content)">
+    <div th:replace="${content}">
+        Replace this content.
     </div>
 </div>
 
-<footer th:fragment="footer">
-    <div class="container">
-        <h3>My footer</h3>
-        <p>©All rights reserved</p>
+<footer th:fragment="footer" class="footer">
+    <div class="footer_container">
+        <h3 class="container text-center">My footer</h3>
     </div>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>

@@ -8,6 +8,6 @@ public interface QuizService {
     Quiz getQuiz(long id);
     Quiz saveQuiz(Quiz quiz);
     void deleteQuiz(long id);
-    Quiz edit(Quiz quiz);
+    Quiz edit(Quiz quiz, long id);
     List<Quiz> getQuizzes();
 }
