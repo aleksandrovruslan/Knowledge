@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/quiz")
+@RequestMapping("/api/v1/quiz")
 public class QuizController {
     @Autowired
     private QuizService quizService;

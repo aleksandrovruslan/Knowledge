@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="layout :: head(~{this :: title},_,~{this :: #scripts})">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <title>Words</title>
+    <title>Words list</title>
     <th:block id="scripts">
         <script type="text/javascript" src="/js/words.js"></script>
     </th:block>
@@ -13,18 +13,8 @@
     <div id="content">
         <div class="container justify-content-center col-5">
             <div class="alert alert-primary">Words</div>
-            <div class="alert alert-warning" id="result_panel">Result panel</div>
-            <form class="container justify-content-center col-7">
-                <label for="word">Enter word:</label>
-                <div class="input-group">
-                    <div class="col-xs-3">
-                        <input type="text" class="form-control" name="word" id="word">
-                    </div>
-                    <div class="input-group-append">
-                        <button type="button" class="btn btn-outline-primary" id="add_word">Add word</button>
-                    </div>
-                </div>
-            </form>
+                <button type="button" class="btn btn-outline-primary" id="words_list">Words list</button>
+            <div class="alert alert-light" id="result_panel">Result panel</div>
         </div>
     </div>
 </div>
