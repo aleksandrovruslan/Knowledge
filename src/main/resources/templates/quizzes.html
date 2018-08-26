@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout :: head(~{this :: title},_,~{this :: #scripts})">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Quizzes</title>
+    <th:block id="scripts">
+        <script type="text/javascript" src="/js/quizzes.js"></script>
+    </th:block>
+</head>
+<body>
+<div th:replace="layout :: header(_)">Header</div>
+<div th:replace="layout :: general(~{this :: #content})">
+    <div id="content">
+        <div class="container justify-content-center col-5">
+            <div class="alert alert-primary">Quiz</div>
+            <div class="alert alert-warning" id="result_panel">
+                Result panel
+                <div id="question_panel"></div>
+                <div id="answers_panel"></div>
+            </div>
+            <form class="container justify-content-center">
+                <label for="question">Enter quiz:</label>
+                <div class="input-group">
+                    <div class="col-xs-3">
+                        <input type="text" class="form-control" name="question" id="question">
+                    </div>
+                    <div class="input-group-append">
+                        <button type="button" class="btn btn-outline-primary" id="add_question">Add question</button>
+                    </div>
+                    <div class="col-xs-3">
+                        <input type="text" class="form-control" name="answer" id="answer">
+                    </div>
+                    <div class="input-group-append">
+                        <button type="button" class="btn btn-outline-primary" id="add_answer">Add answer</button>
+                    </div>
+                    <div class="col-12">
+                        <button type="button" class="btn btn-primary" id="add_quiz">Add quiz</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<footer th:replace="layout :: footer">Footer</footer>
+</body>
+</html>

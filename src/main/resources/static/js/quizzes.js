@@ -1,33 +1,60 @@
 $(function () {
-    $word = $('#word');
-    $result_panel = $('#result_panel');
+    var question_val = '';
+    var answers = [];
 
-    $(document).on('click', '#add_word', function () {
-        var word = toJSONExport($word.val());
-        if (word === 'undefined') {
-            $result_panel.text('incorrect value');
-        } else {
-            addWord(word);
+    $question = $('#question');
+    $answer = $('#answer');
+    $question_panel = $('#question_panel');
+    $answers_panel = $('#answers_panel');
+
+    $(document).on('click', '#add_question', function () {
+        if (question_val === '') {
+            var question = extractQuestion($question.val());
+            if (question === 'undefined') {
+                $question_panel.text('incorrect value');
+            } else {
+                question_val = question;
+                $question_panel.text(question);
+                $question.val('');
+            }
         }
     });
 
-    function toJSONExport(word) {
-        if (word === 'undefined') return word;
-        word = word.trim().toLowerCase();
-        if (word === '') return 'undefined';
-        word = JSON.stringify({'name':word});
-        return word;
+    function extractQuestion(question) {
+        if (question === 'undefined') return question;
+        question = question.trim().toLowerCase();
+        if (question === '') return 'undefined';
+        return question;
     }
 
-    function addWord(word) {
+    $(document).on('click', '#add_answer', function () {
+        console.log('click');
+        var answer = extractAnswer($answer.val());
+        if (answer === 'undefined') {
+            $answers_panel.text('incorrect value');
+        } else {
+            answers.push(answer);
+            $answers_panel.append(answer);
+            $answer.val('');
+        }
+        console.log(answer);
+    });
+
+    function extractAnswer(answer) {
+        if (answer === 'undefined') return answer;
+        answer = answer.trim().toLowerCase();
+        if (answer === '') return 'undefined';
+        return answer;
+    }
+
+    function addQuiz() {
         $.ajax({
             type: 'POST',
-            url: '../api/v1/word/',
+            url: '../api/v1/quiz/',
             contentType : 'application/json',
-            data: word,
+            data: quiz,
             success: function (data) {
                 $result_panel.text(data);
-                $word.val('');
             },
             error: function (xhr, resp, text) {
                 console.log(xhr, resp, text);
