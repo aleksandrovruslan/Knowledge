@@ -26,7 +26,15 @@ public class Word implements Serializable {
     @ManyToMany(mappedBy = "answers")
     private Set<Quiz> quizTranslations = new HashSet<>();
 
+    private int answers;
+
+    private int correctAnswers;
+
     public Word() {
+    }
+
+    public Word(String name) {
+        this.name = name;
     }
 
     public Word(Set<Quiz> quizzes, Set<Quiz> quizTranslations, String name) {
@@ -65,6 +73,22 @@ public class Word implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public int getAnswers() {
+        return answers;
+    }
+
+    public void setAnswers(int answers) {
+        this.answers = answers;
+    }
+
+    public int getCorrectAnswers() {
+        return correctAnswers;
+    }
+
+    public void setCorrectAnswers(int correctAnswers) {
+        this.correctAnswers = correctAnswers;
     }
 
     @Override

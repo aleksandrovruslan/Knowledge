@@ -3,6 +3,7 @@ package com.aleksandrov.Knowledge.controllers.apiV1;
 import com.aleksandrov.Knowledge.models.Quiz;
 import com.aleksandrov.Knowledge.services.Quiz.QuizService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,8 +20,9 @@ public class QuizController {
     }
 
     @PostMapping("/")
-    public Quiz add(@RequestBody Quiz quiz) {
-        return quizService.saveQuiz(quiz);
+    public ResponseEntity<?> add(@RequestBody Quiz quiz) {
+        quizService.saveQuiz(quiz);
+        return ResponseEntity.ok("resource saved");
     }
 
     @DeleteMapping("/{id}")

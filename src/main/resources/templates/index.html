@@ -1,16 +1,31 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="layout :: head(~{this :: title},_,_)">
+<head th:replace="layout :: head(~{this :: title},_,~{this :: #scripts})">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <title>Learn</title>
+    <th:block id="scripts">
+        <script type="text/javascript" src="/js/learn.js"></script>
+    </th:block>
 </head>
 <body>
 <div th:replace="layout :: header(_)">Header</div>
 <div th:replace="layout :: general(~{this :: #content})">
-    <div id="content">
-        <div class="container justify-content-center col-5">
-            <div class="alert alert-primary">Quiz monitor</div>
-            <div class="alert alert-warning">Answer monitor</div>
+    <div class="container">
+        <div class="row no-gutters" id="content">
+            <div class="col-sm mx-4">
+                <div class="alert alert-warning text-center" id="alert_panel">Alert monitor</div>
+            </div>
+            <div class="col-sm mx-4">
+                <div class="alert alert-primary text-center" id="quiz_panel">Quiz monitor</div>
+                <div class="alert alert-warning text-center" id="answers_panel">Answers monitor</div>
+                <div class="alert alert-warning text-center" id="answer_panel">Answer monitor</div>
+                <button class="btn btn-outline-primary" id="start">Start learn</button>
+                <button class="btn btn-outline-primary" id="check_answer">Check answer</button>
+                <button class="btn btn-outline-primary" id="save_result">Save result test</button>
+            </div>
+            <div class="col-sm mx-4">
+                <div class="alert alert-warning text-center" id="prompt_panel">Prompt monitor</div>
+            </div>
         </div>
     </div>
 </div>

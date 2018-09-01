@@ -18,11 +18,11 @@ public class Quiz implements Serializable {
 
     @ManyToOne(optional = false
             , cascade = {CascadeType.ALL}
-            , fetch = FetchType.LAZY)
+            , fetch = FetchType.EAGER)
     @JoinColumn(name = "question_id")
     private Word question;
 
-    @ManyToMany(fetch = FetchType.LAZY
+    @ManyToMany(fetch = FetchType.EAGER
             , cascade = {CascadeType.ALL})
     @JoinTable(name = "quiz_answers",
             joinColumns = @JoinColumn(name = "question_id"),

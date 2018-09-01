@@ -4,9 +4,11 @@ $(function () {
 
     $question = $('#question');
     $answer = $('#answer');
+    $result_panel = $('#result_panel');
     $question_panel = $('#question_panel');
     $answers_panel = $('#answers_panel');
 
+    //Add quiz
     $(document).on('click', '#add_question', function () {
         if (question_val === '') {
             var question = extractQuestion($question.val());
@@ -28,16 +30,14 @@ $(function () {
     }
 
     $(document).on('click', '#add_answer', function () {
-        console.log('click');
         var answer = extractAnswer($answer.val());
         if (answer === 'undefined') {
             $answers_panel.text('incorrect value');
         } else {
             answers.push(answer);
-            $answers_panel.append(answer);
+            $answers_panel.append(answer + '<br>');
             $answer.val('');
         }
-        console.log(answer);
     });
 
     function extractAnswer(answer) {
@@ -47,47 +47,81 @@ $(function () {
         return answer;
     }
 
-    function addQuiz() {
+    $(document).on('click', '#add_quiz', function (){
+        if (question === '' || answers.length === 0) {
+            $result_panel.text('fill in all the information');
+        } else {
+            addQuiz(assembleQuizJSON());
+        }
+    });
+
+    function assembleQuizJSON() {
+        var quizJSON = '';
+        answers.forEach(function(entry){
+           quizJSON += '{"name":"' + entry + '"},';
+        });
+        quizJSON = '{"question":{"name":"' + question_val + '"},"answers":['
+        + quizJSON.substring(0, quizJSON.length - 1) + ']}';
+        return quizJSON;
+    }
+
+    function addQuiz(quiz) {
         $.ajax({
             type: 'POST',
             url: '../api/v1/quiz/',
             contentType : 'application/json',
             data: quiz,
             success: function (data) {
-                $result_panel.text(data);
+                clearPanels();
             },
             error: function (xhr, resp, text) {
                 console.log(xhr, resp, text);
-
             }
         });
     }
 
-    //Words list
-    $(document).on('click', '#words_list', function () {
-        getWordsList();
+    function clearPanels() {
+        question_val = '';
+        answers = [];
+        $question_panel.text('');
+        $answers_panel.text('');
+    }
+
+    //Quizzes list
+    $(document).on('click', '#quizzes_list', function () {
+        getQuizzesList();
     });
 
-    function getWordsList() {
+    function getQuizzesList() {
         $.ajax({
             type: 'GET',
-            url: '../api/v1/word/list',
+            url: '../api/v1/quiz/list',
             dataType: 'json',
             success: function (data) {
-                fillWordsList(data);
+                fillQuizzesList(data);
             },
             error: function (xhr, resp, text) {
                 console.log(xhr, resp, text);
-
             }
         });
     }
 
-    function fillWordsList(wordsList) {
-        console.log(wordsList);
+    function fillQuizzesList(quizzesList) {
+        quizzesList.forEach(function (entry) {
+            var answers = '';
+            entry['answers'].forEach(function (answer) {
+                answers += answer['name'] + ', ';
+            });
+            if (answers.length > 1) {
+                answers = answers.substring(0, answers.length - 2);
+            }
+            entry['answers'] = answers;
+        });
+        console.log(quizzesList);
+
         var container = document.getElementById('result_panel');
         var hot = new Handsontable(container, {
-            data: wordsList,
+            data: quizzesList,
             rowHeaders: true,
             colHeaders: true,
             filters: true,
@@ -95,8 +129,16 @@ $(function () {
             columnSorting: true,
             contextMenu: true,
             colHeaders: [
-                'id',
-                'name'
+                'question',
+                'answers'
+            ],
+            columns: [
+                {
+                    data: 'question.name'
+                },
+                {
+                    data: 'answers'
+                }
             ]
         });
 
