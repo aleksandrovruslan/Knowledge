@@ -9,5 +9,5 @@ public interface QuizService {
     Quiz saveQuiz(Quiz quiz);
     void deleteQuiz(long id);
     Quiz edit(Quiz quiz, long id);
-    List<Quiz> getQuizzes();
+    Iterable<Quiz> getQuizzes();
 }

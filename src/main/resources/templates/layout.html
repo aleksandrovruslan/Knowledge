@@ -26,8 +26,13 @@
         <th:block  th:replace="${links}">
             <a class="navbar-brand" href="/">Learn</a>
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="/collections">Collections</a>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="/quizzes" id="dropdownCollections" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Collections</a>
+                    <div class="dropdown-menu" aria-labelledby="dropdownCollections">
+                        <a class="dropdown-item" href="/collections">Add collection</a>
+                        <a class="dropdown-item" href="/collections/list">Collections list</a>
+                        <a class="dropdown-item" href="/collections/search">Collections search</a>
+                    </div>
                 </li>
 
                 <li class="nav-item dropdown">

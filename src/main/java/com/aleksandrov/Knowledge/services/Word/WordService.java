@@ -9,5 +9,5 @@ public interface WordService {
     Word saveWord(Word word);
     void deleteWord(long id);
     Word editWord(Word word, long id);
-    List<Word> getWords();
+    Iterable<Word> getWords();
 }

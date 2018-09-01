@@ -38,10 +38,8 @@ public class WordServiceImpl implements WordService {
     }
 
     @Override
-    public List<Word> getWords() {
-        List<Word> words = new LinkedList<>();
-        wordRepository.findAll().forEach(word -> words.add(word));
-        return words;
+    public Iterable<Word> getWords() {
+        return wordRepository.findAll();
     }
 
     private Word findWord(long id) {

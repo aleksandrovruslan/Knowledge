@@ -9,5 +9,5 @@ public interface CollectionService {
     Collection saveCollection(Collection collection);
     void deleteCollection(long id);
     Collection edit(Collection collection, long id);
-    List<Collection> getCollections();
+    Iterable<Collection> getCollections();
 }

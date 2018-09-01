@@ -6,9 +6,6 @@ import com.aleksandrov.Knowledge.repositories.QuizRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Service
 public class QuizServiceImpl implements QuizService {
     @Autowired
@@ -39,10 +36,8 @@ public class QuizServiceImpl implements QuizService {
     }
 
     @Override
-    public List<Quiz> getQuizzes() {
-        List<Quiz> quizzes = new ArrayList<>();
-        quizRepository.findAll().forEach(quiz -> quizzes.add(quiz));
-        return quizzes;
+    public Iterable<Quiz> getQuizzes() {
+        return quizRepository.findAll();
     }
 
     private Quiz findQuiz(long id) {

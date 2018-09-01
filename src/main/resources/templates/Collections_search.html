@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="layout :: head(~{this :: title},_,~{this :: #scripts})">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <title>Collections</title>
+    <title>Collections search</title>
     <th:block id="scripts">
         <script type="text/javascript" src="/js/collections.js"></script>
     </th:block>
@@ -14,14 +14,14 @@
         <div class="container justify-content-center col-5">
             <div class="alert alert-primary">Collections</div>
             <div class="alert alert-warning" id="result_panel">Result panel</div>
-            <form class="container justify-content-center">
+            <form class="container justify-content-center col-7">
                 <label for="collection">Enter collection:</label>
                 <div class="input-group">
                     <div class="col-xs-3">
                         <input type="text" class="form-control" name="collection" id="collection">
                     </div>
                     <div class="input-group-append">
-                        <button type="button" class="btn btn-outline-primary" id="add_collection">Add collection</button>
+                        <button type="button" class="btn btn-outline-primary" id="search_word">Search collection</button>
                     </div>
                 </div>
             </form>

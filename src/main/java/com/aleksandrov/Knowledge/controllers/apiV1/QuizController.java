@@ -6,8 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
 @RequestMapping("/api/v1/quiz")
 public class QuizController {
@@ -26,17 +24,19 @@ public class QuizController {
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable long id) {
+    public ResponseEntity<?> delete(@PathVariable long id) {
         quizService.deleteQuiz(id);
+        return ResponseEntity.ok("resource deleted");
     }
 
     @PutMapping("/{id}")
-    public Quiz edit(@RequestBody Quiz quiz, @PathVariable Long id) {
-        return quizService.edit(quiz, id);
+    public ResponseEntity<?> edit(@RequestBody Quiz quiz, @PathVariable Long id) {
+        quizService.edit(quiz, id);
+        return ResponseEntity.ok("resource changed");
     }
 
     @GetMapping("/list")
-    public List<Quiz> list() {
+    public Iterable<Quiz> list() {
         return quizService.getQuizzes();
     }
 }

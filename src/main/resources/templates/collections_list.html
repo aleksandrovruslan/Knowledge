@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout :: head(~{this :: title},_,~{this :: #scripts})">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Collections list</title>
+    <th:block id="scripts">
+        <script type="text/javascript" src="/js/quizzes.js"></script>
+    </th:block>
+</head>
+<body>
+<div th:replace="layout :: header(_)">Header</div>
+<div th:replace="layout :: general(~{this :: #content})">
+    <div id="content">
+        <div class="container justify-content-center col-5">
+            <div class="alert alert-primary">Collections</div>
+            <button type="button" class="btn btn-outline-primary" id="collections_list">Collections list</button>
+            <div id="result_panel"></div>
+        </div>
+    </div>
+</div>
+<footer th:replace="layout :: footer">Footer</footer>
+</body>
+</html>

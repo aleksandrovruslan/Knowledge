@@ -39,10 +39,8 @@ public class CollectionServiceImpl implements CollectionService {
     }
 
     @Override
-    public List<Collection> getCollections() {
-        List<Collection> collections = new ArrayList<>();
-        collectionRepository.findAll().forEach(collection -> collections.add(collection));
-        return collections;
+    public Iterable<Collection> getCollections() {
+        return collectionRepository.findAll();
     }
 
     private Collection findCollection(long id) {

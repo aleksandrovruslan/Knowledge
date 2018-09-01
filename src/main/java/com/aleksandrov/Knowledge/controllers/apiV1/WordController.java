@@ -6,8 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
 @RequestMapping("/api/v1/word")
 public class WordController {
@@ -34,11 +32,11 @@ public class WordController {
     @PutMapping("/{id}")
     public ResponseEntity<?> edit(@RequestBody Word word, @PathVariable Long id) {
         wordService.editWord(word, id);
-        return ResponseEntity.ok("resource saved");
+        return ResponseEntity.ok("resource changed");
     }
 
     @GetMapping("/list")
-    public List<Word> list() {
+    public Iterable<Word> list() {
         return wordService.getWords();
     }
 }

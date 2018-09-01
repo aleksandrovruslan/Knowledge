@@ -31,7 +31,6 @@ $(function () {
             },
             error: function (xhr, resp, text) {
                 console.log(xhr, resp, text);
-
             }
         });
     }

@@ -31,6 +31,7 @@ html {
     /*max-width: 680px;*/
     padding: 0 15px;
 }
-#check_answer, #hot-display-license-info {
+#check_answer, #hot-display-license-info, #prompt_panel, #alert_panel
+, #save_result {
     display: none;
 }

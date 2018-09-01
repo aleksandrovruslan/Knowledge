@@ -3,9 +3,8 @@ package com.aleksandrov.Knowledge.controllers.apiV1;
 import com.aleksandrov.Knowledge.models.Collection;
 import com.aleksandrov.Knowledge.services.Collection.CollectionService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/collection")
@@ -19,22 +18,25 @@ public class CollectionController {
     }
 
     @PostMapping("/")
-    public Collection add(@RequestBody Collection collection) {
-        return collectionService.saveCollection(collection);
+    public ResponseEntity<?> add(@RequestBody Collection collection) {
+        collectionService.saveCollection(collection);
+        return ResponseEntity.ok("resource saved");
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable long id) {
+    public ResponseEntity<?> delete(@PathVariable long id) {
         collectionService.deleteCollection(id);
+        return ResponseEntity.ok("resource deleted");
     }
 
     @PutMapping("/{id}")
-    public Collection edit(@RequestBody Collection collection, @PathVariable Long id) {
-        return collectionService.edit(collection, id);
+    public ResponseEntity<?> edit(@RequestBody Collection collection, @PathVariable Long id) {
+        collectionService.edit(collection, id);
+        return ResponseEntity.ok("resource changed");
     }
 
     @GetMapping("/list")
-    public List<Collection> list() {
+    public Iterable<Collection> list() {
         return collectionService.getCollections();
     }
 }
