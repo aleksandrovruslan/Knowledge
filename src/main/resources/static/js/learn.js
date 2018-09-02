@@ -7,6 +7,8 @@ $(function () {
     $start = $('#start');
     $check_answer = $('#check_answer');
     $save_result = $('#save_result');
+    $selectCollection = $('#selectCollection');
+    var collectionId;
     var chars = new Map([['q', 'й'], ['w', 'ц'], ['e', 'у'], ['r', 'к']
         , ['t', 'е'], ['y', 'н'], ['u', 'г'], ['i', 'ш'], ['o', 'щ'], ['p', 'з']
         , ['[', 'х'], [']', 'ъ'], ['a', 'ф'], ['s', 'ы'], ['d', 'в'], ['f', 'а']
@@ -29,15 +31,20 @@ $(function () {
     //TODO сделать проверку включения русского языка и автоматический ввод английских букв
 
     $start.click(function () {
-        if (typeof quizzesList === 'undefined') {
-            getQuizzesList();
+        collectionId = $selectCollection.val();
+        if (collectionId === 'Select collection') {
+            alertDanger('for start select collection');
         } else {
-            pullQuiz();
+            if (typeof quizzesList === 'undefined') {
+                getQuizzesList();
+            } else {
+                pullQuiz();
+            }
+            $start.hide();
+            $check_answer.show();
+            $save_result.show();
+            $answer_panel.focus();
         }
-        $start.hide();
-        $check_answer.show();
-        $save_result.show();
-        $answer_panel.focus();
     });
 
     $check_answer.click(function () {
@@ -91,10 +98,10 @@ $(function () {
     function getQuizzesList() {
         $.ajax({
             type: 'GET',
-            url: '../api/v1/quiz/list',
+            url: '../api/v1/collection/' + collectionId,
             dataType: 'json',
             success: function (data) {
-                quizzesList = data;
+                quizzesList = data['quizzes'];
                 pullQuiz();
             },
             error: function (xhr, resp, text) {
@@ -162,14 +169,23 @@ $(function () {
             return flag;
         }
         if (f()) {
-            $alert_panel.text('Correct answer');
-            $alert_panel.attr('class', success);
-            successSound.play();
+            alertSuccess('Correct answer');
         } else {
-            $alert_panel.text('Incorrect answer');
-            $alert_panel.attr('class', danger);
-            dangerSound.play();
+            alertDanger('Incorrect answer');
         }
+    }
+
+    function alertSuccess(message) {
+        $alert_panel.text('Correct answer');
+        $alert_panel.attr('class', success);
+        successSound.play();
+        $alert_panel.fadeIn(500).fadeOut(3500);
+    }
+
+    function alertDanger(message) {
+        $alert_panel.text(message);
+        $alert_panel.attr('class', danger);
+        dangerSound.play();
         $alert_panel.fadeIn(500).fadeOut(3500);
     }
     
@@ -187,5 +203,26 @@ $(function () {
             $prompt_panel.text(answers);
         }
         $prompt_panel.fadeIn(500).fadeOut(7000);
+    }
+
+    //TODO remove all duplicates and join templates and JavaScript files
+    //Functions for select collections
+    $.ajax({
+        type: 'GET',
+        url: '../api/v1/collection/list',
+        dataType: 'json',
+        success: function (data) {
+            fillValueForSelect(data);
+        },
+        error: function (xhr, resp, text) {
+            console.log(xhr, resp, text);
+        }
+    });
+
+    function fillValueForSelect(collections) {
+        collections.forEach(function (collection) {
+            var value = '<option value="' + collection.id + '">' + collection.name + '</option>';
+            $selectCollection.append(value);
+        });
     }
 });
