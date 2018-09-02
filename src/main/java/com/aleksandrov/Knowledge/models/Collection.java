@@ -16,8 +16,7 @@ public class Collection implements Serializable {
 
     private String name;
 
-    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.REFRESH, CascadeType.REMOVE}
-            , fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "collection_quizzes"
             , joinColumns = @JoinColumn(name = "collection_id")
             , inverseJoinColumns = @JoinColumn(name = "quiz_id"))

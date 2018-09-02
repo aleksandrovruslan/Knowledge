@@ -1,18 +1,23 @@
 $(function () {
     var question_val = '';
     var answers = [];
+    var quizJSON;
+    var collections;
+    var collection;
 
     $question = $('#question');
     $answer = $('#answer');
     $result_panel = $('#result_panel');
     $question_panel = $('#question_panel');
     $answers_panel = $('#answers_panel');
+    $alert_panel = $('#alert_panel');
+    $selectCollection = $('#selectCollection');
 
     //Add quiz
     $(document).on('click', '#add_question', function () {
         if (question_val === '') {
-            var question = extractQuestion($question.val());
-            if (question === 'undefined') {
+            var question = $question.val().trim().toLowerCase();
+            if (question === 'undefined' || question === '') {
                 $question_panel.text('incorrect value');
             } else {
                 question_val = question;
@@ -48,20 +53,25 @@ $(function () {
     }
 
     $(document).on('click', '#add_quiz', function (){
-        if (question === '' || answers.length === 0) {
-            $result_panel.text('fill in all the information');
+        collection = $selectCollection.val();
+        if (collection === 'Select collection') {
+            $alert_panel.show().text('select collection');
+        } else if (question_val === '') {
+            $alert_panel.show().text('fill question');
+        } else if (answers.length === 0) {
+            $alert_panel.show().text('fill answers');
         } else {
             addQuiz(assembleQuizJSON());
         }
     });
 
     function assembleQuizJSON() {
-        var quizJSON = '';
+        quizJSON = '';
         answers.forEach(function(entry){
            quizJSON += '{"name":"' + entry + '"},';
         });
         quizJSON = '{"question":{"name":"' + question_val + '"},"answers":['
-        + quizJSON.substring(0, quizJSON.length - 1) + ']}';
+        + quizJSON.substring(0, quizJSON.length - 1) + '],"collections":[{"id":"' + collection + '"}]}';
         return quizJSON;
     }
 
@@ -72,7 +82,7 @@ $(function () {
             contentType : 'application/json',
             data: quiz,
             success: function (data) {
-                clearPanels();
+                clearPanels(data);
             },
             error: function (xhr, resp, text) {
                 console.log(xhr, resp, text);
@@ -80,11 +90,12 @@ $(function () {
         });
     }
 
-    function clearPanels() {
+    function clearPanels(result) {
         question_val = '';
         answers = [];
         $question_panel.text('');
         $answers_panel.text('');
+        $alert_panel.show().text(result);
     }
 
     //Quizzes list
@@ -162,6 +173,27 @@ $(function () {
                     }
                 });
             })
+        });
+    }
+
+    //Functions for select collections
+    $.ajax({
+        type: 'GET',
+        url: '../api/v1/collection/list',
+        dataType: 'json',
+        success: function (data) {
+            collections = data;
+            fillValueForSelect();
+        },
+        error: function (xhr, resp, text) {
+            console.log(xhr, resp, text);
+        }
+    });
+
+    function fillValueForSelect() {
+        collections.forEach(function (collection) {
+            var value = '<option value="' + collection.id + '">' + collection.name + '</option>';
+            $selectCollection.append(value);
         });
     }
 });

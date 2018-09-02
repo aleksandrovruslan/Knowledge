@@ -16,9 +16,8 @@ public class Quiz implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(optional = false
-            , cascade = {CascadeType.ALL}
-            , fetch = FetchType.EAGER)
+    @ManyToOne(optional = false,
+            cascade = CascadeType.ALL)
     @JoinColumn(name = "question_id")
     private Word question;
 

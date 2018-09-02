@@ -1,7 +1,10 @@
 package com.aleksandrov.Knowledge.services.Quiz;
 
+import com.aleksandrov.Knowledge.exceptions.Collection.CollectionNotFoundException;
 import com.aleksandrov.Knowledge.exceptions.Quiz.QuizNotFoudException;
+import com.aleksandrov.Knowledge.models.Collection;
 import com.aleksandrov.Knowledge.models.Quiz;
+import com.aleksandrov.Knowledge.repositories.CollectionRepository;
 import com.aleksandrov.Knowledge.repositories.QuizRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,6 +13,8 @@ import org.springframework.stereotype.Service;
 public class QuizServiceImpl implements QuizService {
     @Autowired
     private QuizRepository quizRepository;
+    @Autowired
+    private CollectionRepository collectionRepository;
 
     @Override
     public Quiz getQuiz(long id) {
@@ -18,7 +23,15 @@ public class QuizServiceImpl implements QuizService {
 
     @Override
     public Quiz saveQuiz(Quiz quiz) {
-        return quizRepository.save(quiz);
+        Quiz quizSaved = quizRepository.save(quiz);
+        quiz.getCollections().forEach((c) -> {
+            Collection collection = collectionRepository.findById(c.getId())
+                    .orElseThrow(() -> new CollectionNotFoundException
+                            ("Collection id " + c.getId() + " not found."));
+            collection.getQuizzes().add(quizSaved);
+            collectionRepository.save(collection);
+        });
+        return quizSaved;
     }
 
     @Override
